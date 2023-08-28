@@ -11,36 +11,37 @@ void insertion_sort_list(listint_t **list)
 {
 	listint_t *sorted = NULL;  /* Sorted part of the list */
 	listint_t *unsorted = *list;  /* Unsorted part of the list */
-	listint_t *current = NULL, *temp = NULL;/*Current &temp node toinsert*/
+	listint_t *ia = NULL;/* The Insert after variable */
 
 	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
 
 	while (unsorted != NULL)
 	{
-		current = unsorted;
-		unsorted = unsorted->next;
-		if (sorted == NULL || current->n < sorted->n)
+		ia = NULL;
+		while (sorted && sorted->n < unsorted->n)
 		{
-			current->next = sorted;
-			current->prev = NULL;
-			if (sorted != NULL)
-				sorted->prev = current;
-			sorted = current;
+			ia = sorted;
+			sorted = sorted->next;
+		}
+		if (!ia)
+		{
+			(*list)->prev = unsorted;
+			(*list) = unsorted;
+			unsorted = unsorted->next;
+			(*list)->next = sorted;
+			(*list)->prev = NULL;
 		}
 		else
 		{
-			temp = sorted;
-			while (temp->next != NULL && temp->next->n < current->n)
-				temp = temp->next;
-
-			current->prev = temp;
-			current->next = temp->next;
-			if (temp->next != NULL)
-				temp->next->prev = current;
-			temp->next = current;
-			if (current->prev == NULL)
-				*list = sorted; /* Update the head of the list */
+			ia->next = unsorted;
+			unsorted = unsorted->next;
+			if (unsorted)
+				unsorted->prev = ia;
+			ia->next->next = sorted;
+			ia->next->prev = ia;
+			if (sorted)
+				sorted->prev = ia->next;
 		}
 		/* Printing the list after each swap */
 		print_list(*list);
