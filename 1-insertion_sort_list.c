@@ -12,7 +12,7 @@ void insertion_sort_list(listint_t **list)
 	listint_t *sorted = NULL;  /* Sorted part of the list */
 	listint_t *unsorted = *list;  /* Unsorted part of the list */
 	listint_t *current = NULL, *temp = NULL;/*Current &temp node toinsert*/
-    
+
 	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
 
@@ -39,9 +39,9 @@ void insertion_sort_list(listint_t **list)
 			if (temp->next != NULL)
 				temp->next->prev = current;
 			temp->next = current;
+			if (current->prev == NULL)
+				*list = sorted; /* Update the head of the list */
 		}
-		if (current->prev == NULL)
-			*list = sorted; /* Update the head of the list */
 		/* Printing the list after each swap */
 		print_list(*list);
 	}
