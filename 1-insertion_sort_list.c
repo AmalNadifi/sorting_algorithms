@@ -34,16 +34,15 @@ void insertion_sort_list(listint_t **list)
 			while (temp->next != NULL && temp->next->n < current->n)
 				temp = temp->next;
 
-			current->next = temp->next;
 			current->prev = temp;
+			current->next = temp->next;
 			if (temp->next != NULL)
-			{
 				temp->next->prev = current;
-				print_list(*list);
-			}
-
 			temp->next = current;
 		}
+		if (current->prev == NULL)
+			*list = sorted; /* Update the head of the list */
+		/* Printing the list after each swap */
+		print_list(*list);
 	}
-	*list = sorted; /* Update the head of the list */
 }
