@@ -9,41 +9,40 @@
 
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *sorted = NULL;  /* Sorted part of the list */
-	listint_t *unsorted = *list;  /* Unsorted part of the list */
-	listint_t *ia = NULL;/* The Insert after variable */
+	listint_t *current = NULL, *temp = NULL, *swap_tmp = NULL;
 
-	if (list == NULL || *list == NULL || (*list)->next == NULL)
+	if (!list || !(*list) || (*list)->next == NULL)
 		return;
-
-	while (unsorted != NULL)
+	for (current = *list; current;)
 	{
-		ia = NULL;
-		while (sorted && sorted->n < unsorted->n)
+		if (current->next && (current->n >  current->next->n))
 		{
-			ia = sorted;
-			sorted = sorted->next;
-		}
-		if (!ia)
-		{
-			(*list)->prev = unsorted;
-			(*list) = unsorted;
-			unsorted = unsorted->next;
-			(*list)->next = sorted;
-			(*list)->prev = NULL;
-		}
-		else
-		{
-			ia->next = unsorted;
-			unsorted = unsorted->next;
-			if (unsorted)
-				unsorted->prev = ia;
-			ia->next->next = sorted;
-			ia->next->prev = ia;
-			if (sorted)
-				sorted->prev = ia->next;
-		}
-		/* Printing the list after each swap */
-		print_list(*list);
+			temp = current->next;
+			for (swap_tmp = temp; swap_tmp->prev;
+					swap_tmp = swap_tmp->prev)
+				if ((swap_tmp->prev->n) < (swap_tmp->n))
+					break;
+			if (temp->next && temp->prev)
+			{
+				temp->prev->next = temp->next;
+				temp->next->prev = temp->prev;
+			}
+			else
+				temp->prev->next = NULL;
+			temp->next = swap_tmp;
+			if (swap_tmp->prev)
+			{
+				swap_tmp->prev->next = temp;
+				temp->prev = swap_tmp->prev;
+				swap_tmp->prev = temp;
+			}
+			else
+			{
+				swap_tmp->prev = temp, temp->prev = NULL;
+				*list = temp;
+			}
+			print_list(*list), current = *list;
+			continue;
+		} current = current->next;
 	}
 }
