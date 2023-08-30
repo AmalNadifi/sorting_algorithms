@@ -34,7 +34,7 @@ size_t pivotize(int *arr, size_t begin, size_t finish, size_t size)
 			ctr1++;
 			if (ctr1 != ctr2)
 			{
-				swap_int(&arr[ctr1], &arr[ctr1]);
+				swap_int(&arr[ctr1], &arr[ctr2]);
 				print_array(arr, size);
 			}
 		}
