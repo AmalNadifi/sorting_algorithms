@@ -13,14 +13,14 @@ void swap_int(int *x, int *y)
 	*y = temp;
 }
 
- /**
-  * pivotize - THis function is sorting an array using Pivot
-  * @arr: The array of int
-  * @begin: ThE first array
-  * @finish: The final array
-  * @size: The array size
-  * Return: ctr1 + 1
-  */
+/**
+ * pivotize - THis function is sorting an array using Pivot
+ * @arr: The array of int
+ * @begin: ThE first array
+ * @finish: The final array
+ * @size: The array size
+ * Return: ctr1 + 1
+ */
 size_t pivotize(int *arr, size_t begin, size_t finish, size_t size)
 {
 	size_t ctr1, ctr2;
